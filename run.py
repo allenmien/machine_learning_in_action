@@ -4,7 +4,7 @@
 @file: run.py 
 @time: 2018/04/21
 """
-from Chapter4 import Bayes
+import KMeans.kNN as KNN
 
 if __name__ == u"__main__":
-    Bayes.testingNB()
+    KNN.handwritingClassTest()
