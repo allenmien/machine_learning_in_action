@@ -1,3 +1,4 @@
+# coding=utf-8
 '''
 Created on Oct 19, 2010
 
@@ -35,18 +36,18 @@ def setOfWords2Vec(vocabList, inputSet):
 
 
 def trainNB0(trainMatrix, trainCategory):
-    numTrainDocs = len(trainMatrix)
-    numWords = len(trainMatrix[0])
-    pAbusive = sum(trainCategory) / float(numTrainDocs)
-    p0Num = ones(numWords);
-    p1Num = ones(numWords)  # change to ones()
-    p0Denom = 2.0;
+    numTrainDocs = len(trainMatrix)  # 样本数量
+    numWords = len(trainMatrix[0])  # 特征的维度数量 n
+    pAbusive = sum(trainCategory) / float(numTrainDocs)  # 谩骂的样本占所有样本的概率--0.5
+    p0Num = ones(numWords)  # 1*n维向量
+    p1Num = ones(numWords)  # 1*n维向量
+    p0Denom = 2.0
     p1Denom = 2.0  # change to 2.0
     for i in range(numTrainDocs):
-        if trainCategory[i] == 1:
-            p1Num += trainMatrix[i]
-            p1Denom += sum(trainMatrix[i])
-        else:
+        if trainCategory[i] == 1:  # 当该样本为谩骂时
+            p1Num += trainMatrix[i]  # (p1Num + 谩骂的样本)  1*n
+            p1Denom += sum(trainMatrix[i])  # (2 + 该样本特征为1的值的和)
+        else:  # 当该样本不是谩骂时
             p0Num += trainMatrix[i]
             p0Denom += sum(trainMatrix[i])
     p1Vect = log(p1Num / p1Denom)  # change to log()
