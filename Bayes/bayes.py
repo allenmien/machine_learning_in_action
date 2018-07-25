@@ -40,7 +40,7 @@ def setOfWords2Vec(vocabList, inputSet):
 def trainNB0(trainMatrix, trainCategory):
     numTrainDocs = len(trainMatrix)  # 样本数量
     numWords = len(trainMatrix[0])  # 特征的维度数量 n
-    pAbusive = sum(trainCategory) / float(numTrainDocs)  # 谩骂的样本占所有样本的概率--0.5
+    pAbusive = sum(trainCategory) / float(numTrainDocs)  # 谩骂的样本占所有样本的概率--0.5-->p(ci)
     p0Num = ones(numWords)  # 1*n维向量
     p1Num = ones(numWords)  # 1*n维向量
     p0Denom = 2.0
@@ -52,8 +52,8 @@ def trainNB0(trainMatrix, trainCategory):
         else:  # 当该样本不是谩骂时
             p0Num += trainMatrix[i]
             p0Denom += sum(trainMatrix[i])
-    p1Vect = log(p1Num / p1Denom)  # change to log()
-    p0Vect = log(p0Num / p0Denom)  # change to log()
+    p1Vect = log(p1Num / p1Denom)  # change to log()--p(w|c1)
+    p0Vect = log(p0Num / p0Denom)  # change to log()----p(w|c2)
     return p0Vect, p1Vect, pAbusive
 
 
@@ -100,11 +100,11 @@ def spamTest():
     classList = []
     fullText = []
     for i in range(1, 26):
-        wordList = textParse(open('email/spam/%d.txt' % i).read())
+        wordList = textParse(open('./Bayes/email/spam/%d.txt' % i).read())
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(1)
-        wordList = textParse(open('email/ham/%d.txt' % i).read())
+        wordList = textParse(open('./Bayes/email/ham/%d.txt' % i).read())
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(0)
